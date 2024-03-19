@@ -1,8 +1,17 @@
+import React, { ChangeEvent } from 'react';
 import clsx from 'clsx';
 
-// TODO: add missing typings
-export function Checkbox(props) {
-  const { checked, onChange, children, color = 'blue', ripple = true } = props;
+interface CheckboxProps {
+  checked: boolean;
+  registerVars:object;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  children?: React.ReactNode;
+  color?: 'blue' | 'green'; // Define acceptable color values
+  ripple?: boolean;
+}
+
+export function Checkbox(props: CheckboxProps) {
+  const { checked , registerVars, onChange, children, color = 'blue', ripple = true } = props;
 
   return (
     <>
@@ -10,7 +19,15 @@ export function Checkbox(props) {
         <div
           className={clsx('inline-flex relative justify-center items-center cursor-pointer group', 'md:text-red-500')}
         >
-          <input id="test" type="checkbox" className="peer sr-only" color={color} />
+          <input
+            id="test"
+            type="checkbox"
+            className="peer sr-only"
+            color={color} // This won't do anything in HTML input elements
+            checked={checked}
+            {...registerVars}
+            onChange={onChange}
+          />
           <div
             className={clsx('h-6 w-6 bg-gray-100 border-gray-500 border-3 rounded', {
               'peer-checked:bg-blue-500 peer-checked:border-blue-500': color === 'blue',

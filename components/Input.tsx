@@ -1,8 +1,18 @@
+import React, { ChangeEvent } from 'react';
 import clsx from 'clsx';
 
-// TODO: add missing typings
-export function Input(props) {
-  const { value, onChange, color = 'blue', className, id, placeholder = 'Standard' } = props;
+interface InputProps {
+  value: string;
+  registerVars:object;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  color?: string;
+  className?: string;
+  id?: string;
+  placeholder?: string;
+}
+
+export function Input(props: InputProps) {
+  const { value , registerVars, onChange, color = 'blue', className, id, placeholder = 'Standard' } = props;
   return (
     <div className="mx-auto h-8 w-64">
       <label className="relative justify-center items-center">
@@ -10,9 +20,12 @@ export function Input(props) {
           <input
             type="text"
             className={clsx(
-              'peer placeholder-transparent outline-none absolute border border-1 border-t-0 border-r-0 border-l-0 border-b-slate-500 hover:border-b-slate-800 hover:border-b-2 focus:border-b-2 focus:border-b-blue-500'
+              'peer placeholder-transparent outline-none absolute border border-1 border-t-0 border-r-0 border-l-0 border-b-slate-500 hover:border-b-slate-800 hover:border-b-2 focus:border-b-2 focus:border-b-'+color+'-500'
             )}
             id={id}
+            value={value}
+            {...registerVars}
+            onChange={onChange}
             color={color}
             placeholder={placeholder}
           />
