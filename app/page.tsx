@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { Loader } from '@/components/Loader';
 import { Instructions } from '@/components/Instructions';
 import useFuse from '@/hooks/useFuse';
+import SearchResults from '@/components/SearchResults';
 
 export default function HomePage() {
   const [formData, setFormData] = useState({
@@ -64,6 +65,8 @@ export default function HomePage() {
     getData();
   };
 
+  
+
   return (
     <div className="p-2">
       <div className="flex flex-col gap-2 my-2 ml-1">
@@ -113,8 +116,8 @@ export default function HomePage() {
             ...register('searchText', {
               required: 'search text required',
               pattern: {
-                value: /^[a-zA-Z]{4,7}$/,
-                message: 'Only letters and length between 4 and 7',
+                value: /^[a-zA-Z]{4,8}$/,
+                message: 'Only letters and length between 4 and 8',
               },
             }),
           }}
@@ -130,20 +133,7 @@ export default function HomePage() {
           {isLoading && <Loader />} <p className="text-red-400">{submissionErrorMessage}</p>
         </div>
 
-        <div className="font-bold text-center">Results:</div>
-        <div className="text-center">
-          {fuseSearcher.length > 0 ? (
-            fuseSearcher.map((item, index) => (
-              <div key={index}>
-                <div>{item.title}</div>
-                <div>{item.body}</div>
-                <br />
-              </div>
-            ))
-          ) : (
-            <div>No results found</div>
-          )}
-        </div>
+        <SearchResults fuseSearcher={fuseSearcher} />
       </form>
 
       <Instructions />
